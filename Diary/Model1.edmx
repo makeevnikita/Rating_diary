@@ -1,0 +1,574 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище gr691_mnmModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="COURSE">
+          <Key>
+            <PropertyRef Name="COURSE_ID" />
+          </Key>
+          <Property Name="COURSE_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FACULTY">
+          <Key>
+            <PropertyRef Name="FACULTY_ID" />
+          </Key>
+          <Property Name="FACULTY_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FACULTY" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="GROUP">
+          <Key>
+            <PropertyRef Name="GROUP_ID" />
+          </Key>
+          <Property Name="GROUP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GROUP" Type="varchar" MaxLength="20" />
+          <Property Name="FK_COURSE_ID" Type="int" />
+          <Property Name="FK_SPECIALITY_ID" Type="int" />
+          <Property Name="FK_FACULTY_ID" Type="int" />
+          <Property Name="FK_TEACHER_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="MARK">
+          <Key>
+            <PropertyRef Name="MARK_ID" />
+          </Key>
+          <Property Name="MARK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MARK" Type="varchar" MaxLength="1" />
+          <Property Name="FK_SUBJECT_ID" Type="int" />
+          <Property Name="FK_STUDENT_ID" Type="int" />
+          <Property Name="DATE" Type="date" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="ROLE_ID" />
+          </Key>
+          <Property Name="ROLE_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SPECIALITY">
+          <Key>
+            <PropertyRef Name="SPECIALITY_ID" />
+          </Key>
+          <Property Name="SPECIALITY_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SPECIALITY" Type="varchar" MaxLength="60" />
+          <Property Name="CODE" Type="int" />
+        </EntityType>
+        <EntityType Name="SUBJECT">
+          <Key>
+            <PropertyRef Name="SUBJECT_ID" />
+          </Key>
+          <Property Name="SUBJECT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="20" />
+          <Property Name="FK_TEACHER_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="SUBJECT_GROUP">
+          <Key>
+            <PropertyRef Name="FK_GROUP_ID" />
+            <PropertyRef Name="FK_SUBJECT_ID" />
+          </Key>
+          <Property Name="FK_GROUP_ID" Type="int" Nullable="false" />
+          <Property Name="FK_SUBJECT_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="varchar" MaxLength="20" />
+          <Property Name="SURNAME" Type="varchar" MaxLength="20" />
+          <Property Name="PATRONYMIC" Type="varchar" MaxLength="20" />
+          <Property Name="FK_GROUP_ID" Type="int" />
+          <Property Name="LOGIN" Type="varchar" MaxLength="20" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="20" />
+          <Property Name="FK_ROLE_ID" Type="int" />
+        </EntityType>
+        <Association Name="FK_GROUP_COURSE">
+          <End Role="COURSE" Type="Self.COURSE" Multiplicity="0..1" />
+          <End Role="GROUP" Type="Self.GROUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COURSE">
+              <PropertyRef Name="COURSE_ID" />
+            </Principal>
+            <Dependent Role="GROUP">
+              <PropertyRef Name="FK_COURSE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GROUP_FACULTY">
+          <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+          <End Role="GROUP" Type="Self.GROUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTY">
+              <PropertyRef Name="FACULTY_ID" />
+            </Principal>
+            <Dependent Role="GROUP">
+              <PropertyRef Name="FK_FACULTY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GROUP_SPECIALITY">
+          <End Role="SPECIALITY" Type="Self.SPECIALITY" Multiplicity="0..1" />
+          <End Role="GROUP" Type="Self.GROUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPECIALITY">
+              <PropertyRef Name="SPECIALITY_ID" />
+            </Principal>
+            <Dependent Role="GROUP">
+              <PropertyRef Name="FK_SPECIALITY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GROUP_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="GROUP" Type="Self.GROUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="GROUP">
+              <PropertyRef Name="FK_TEACHER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MARK_SUBJECT">
+          <End Role="SUBJECT" Type="Self.SUBJECT" Multiplicity="0..1" />
+          <End Role="MARK" Type="Self.MARK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUBJECT">
+              <PropertyRef Name="SUBJECT_ID" />
+            </Principal>
+            <Dependent Role="MARK">
+              <PropertyRef Name="FK_SUBJECT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MARK_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="MARK" Type="Self.MARK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="MARK">
+              <PropertyRef Name="FK_STUDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUBJECT_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="SUBJECT" Type="Self.SUBJECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="SUBJECT">
+              <PropertyRef Name="FK_TEACHER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_ROLE">
+          <End Role="ROLE" Type="Self.ROLE" Multiplicity="0..1" />
+          <End Role="USER" Type="Self.USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE">
+              <PropertyRef Name="ROLE_ID" />
+            </Principal>
+            <Dependent Role="USER">
+              <PropertyRef Name="FK_ROLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище gr691_mnmModelContainer">
+          <EntitySet Name="COURSE" EntityType="Self.COURSE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FACULTY" EntityType="Self.FACULTY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GROUP" EntityType="Self.GROUP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MARK" EntityType="Self.MARK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROLE" EntityType="Self.ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SPECIALITY" EntityType="Self.SPECIALITY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SUBJECT" EntityType="Self.SUBJECT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SUBJECT_GROUP" EntityType="Self.SUBJECT_GROUP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_GROUP_COURSE" Association="Self.FK_GROUP_COURSE">
+            <End Role="COURSE" EntitySet="COURSE" />
+            <End Role="GROUP" EntitySet="GROUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GROUP_FACULTY" Association="Self.FK_GROUP_FACULTY">
+            <End Role="FACULTY" EntitySet="FACULTY" />
+            <End Role="GROUP" EntitySet="GROUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GROUP_SPECIALITY" Association="Self.FK_GROUP_SPECIALITY">
+            <End Role="SPECIALITY" EntitySet="SPECIALITY" />
+            <End Role="GROUP" EntitySet="GROUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GROUP_USER" Association="Self.FK_GROUP_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="GROUP" EntitySet="GROUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MARK_SUBJECT" Association="Self.FK_MARK_SUBJECT">
+            <End Role="SUBJECT" EntitySet="SUBJECT" />
+            <End Role="MARK" EntitySet="MARK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MARK_USER" Association="Self.FK_MARK_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="MARK" EntitySet="MARK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUBJECT_USER" Association="Self.FK_SUBJECT_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="SUBJECT" EntitySet="SUBJECT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_ROLE" Association="Self.FK_USER_ROLE">
+            <End Role="ROLE" EntitySet="ROLE" />
+            <End Role="USER" EntitySet="USER" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="gr691_mnmModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="COURSE">
+          <Key>
+            <PropertyRef Name="COURSE_ID" />
+          </Key>
+          <Property Name="COURSE_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="GROUP" Relationship="Self.FK_GROUP_COURSE" FromRole="COURSE" ToRole="GROUP" />
+        </EntityType>
+        <EntityType Name="FACULTY">
+          <Key>
+            <PropertyRef Name="FACULTY_ID" />
+          </Key>
+          <Property Name="FACULTY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FACULTY1" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GROUP" Relationship="Self.FK_GROUP_FACULTY" FromRole="FACULTY" ToRole="GROUP" />
+        </EntityType>
+        <EntityType Name="GROUP">
+          <Key>
+            <PropertyRef Name="GROUP_ID" />
+          </Key>
+          <Property Name="GROUP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GROUP1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FK_COURSE_ID" Type="Int32" />
+          <Property Name="FK_SPECIALITY_ID" Type="Int32" />
+          <Property Name="FK_FACULTY_ID" Type="Int32" />
+          <Property Name="FK_TEACHER_ID" Type="Int32" />
+          <NavigationProperty Name="COURSE" Relationship="Self.FK_GROUP_COURSE" FromRole="GROUP" ToRole="COURSE" />
+          <NavigationProperty Name="FACULTY" Relationship="Self.FK_GROUP_FACULTY" FromRole="GROUP" ToRole="FACULTY" />
+          <NavigationProperty Name="SPECIALITY" Relationship="Self.FK_GROUP_SPECIALITY" FromRole="GROUP" ToRole="SPECIALITY" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_GROUP_USER" FromRole="GROUP" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="MARK">
+          <Key>
+            <PropertyRef Name="MARK_ID" />
+          </Key>
+          <Property Name="MARK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MARK1" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="FK_SUBJECT_ID" Type="Int32" />
+          <Property Name="FK_STUDENT_ID" Type="Int32" />
+          <Property Name="DATE" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="SUBJECT" Relationship="Self.FK_MARK_SUBJECT" FromRole="MARK" ToRole="SUBJECT" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_MARK_USER" FromRole="MARK" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="ROLE">
+          <Key>
+            <PropertyRef Name="ROLE_ID" />
+          </Key>
+          <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_USER_ROLE" FromRole="ROLE" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="SPECIALITY">
+          <Key>
+            <PropertyRef Name="SPECIALITY_ID" />
+          </Key>
+          <Property Name="SPECIALITY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SPECIALITY1" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="CODE" Type="Int32" />
+          <NavigationProperty Name="GROUP" Relationship="Self.FK_GROUP_SPECIALITY" FromRole="SPECIALITY" ToRole="GROUP" />
+        </EntityType>
+        <EntityType Name="SUBJECT">
+          <Key>
+            <PropertyRef Name="SUBJECT_ID" />
+          </Key>
+          <Property Name="SUBJECT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FK_TEACHER_ID" Type="Int32" />
+          <NavigationProperty Name="MARK" Relationship="Self.FK_MARK_SUBJECT" FromRole="SUBJECT" ToRole="MARK" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_SUBJECT_USER" FromRole="SUBJECT" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SURNAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PATRONYMIC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FK_GROUP_ID" Type="Int32" />
+          <Property Name="LOGIN" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FK_ROLE_ID" Type="Int32" />
+          <NavigationProperty Name="GROUP" Relationship="Self.FK_GROUP_USER" FromRole="USER" ToRole="GROUP" />
+          <NavigationProperty Name="MARK" Relationship="Self.FK_MARK_USER" FromRole="USER" ToRole="MARK" />
+          <NavigationProperty Name="ROLE" Relationship="Self.FK_USER_ROLE" FromRole="USER" ToRole="ROLE" />
+          <NavigationProperty Name="SUBJECT" Relationship="Self.FK_SUBJECT_USER" FromRole="USER" ToRole="SUBJECT" />
+        </EntityType>
+        <Association Name="FK_GROUP_COURSE">
+          <End Role="COURSE" Type="Self.COURSE" Multiplicity="0..1" />
+          <End Role="GROUP" Type="Self.GROUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COURSE">
+              <PropertyRef Name="COURSE_ID" />
+            </Principal>
+            <Dependent Role="GROUP">
+              <PropertyRef Name="FK_COURSE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GROUP_FACULTY">
+          <End Role="FACULTY" Type="Self.FACULTY" Multiplicity="0..1" />
+          <End Role="GROUP" Type="Self.GROUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTY">
+              <PropertyRef Name="FACULTY_ID" />
+            </Principal>
+            <Dependent Role="GROUP">
+              <PropertyRef Name="FK_FACULTY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GROUP_SPECIALITY">
+          <End Role="SPECIALITY" Type="Self.SPECIALITY" Multiplicity="0..1" />
+          <End Role="GROUP" Type="Self.GROUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SPECIALITY">
+              <PropertyRef Name="SPECIALITY_ID" />
+            </Principal>
+            <Dependent Role="GROUP">
+              <PropertyRef Name="FK_SPECIALITY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GROUP_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="GROUP" Type="Self.GROUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="GROUP">
+              <PropertyRef Name="FK_TEACHER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MARK_SUBJECT">
+          <End Role="SUBJECT" Type="Self.SUBJECT" Multiplicity="0..1" />
+          <End Role="MARK" Type="Self.MARK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUBJECT">
+              <PropertyRef Name="SUBJECT_ID" />
+            </Principal>
+            <Dependent Role="MARK">
+              <PropertyRef Name="FK_SUBJECT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MARK_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="MARK" Type="Self.MARK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="MARK">
+              <PropertyRef Name="FK_STUDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USER_ROLE">
+          <End Role="ROLE" Type="Self.ROLE" Multiplicity="0..1" />
+          <End Role="USER" Type="Self.USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROLE">
+              <PropertyRef Name="ROLE_ID" />
+            </Principal>
+            <Dependent Role="USER">
+              <PropertyRef Name="FK_ROLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUBJECT_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="SUBJECT" Type="Self.SUBJECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="SUBJECT">
+              <PropertyRef Name="FK_TEACHER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="gr691_mnmEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="COURSE" EntityType="Self.COURSE" />
+          <EntitySet Name="FACULTY" EntityType="Self.FACULTY" />
+          <EntitySet Name="GROUP" EntityType="Self.GROUP" />
+          <EntitySet Name="MARK" EntityType="Self.MARK" />
+          <EntitySet Name="ROLE" EntityType="Self.ROLE" />
+          <EntitySet Name="SPECIALITY" EntityType="Self.SPECIALITY" />
+          <EntitySet Name="SUBJECT" EntityType="Self.SUBJECT" />
+          <EntitySet Name="USER" EntityType="Self.USER" />
+          <AssociationSet Name="FK_GROUP_COURSE" Association="Self.FK_GROUP_COURSE">
+            <End Role="COURSE" EntitySet="COURSE" />
+            <End Role="GROUP" EntitySet="GROUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GROUP_FACULTY" Association="Self.FK_GROUP_FACULTY">
+            <End Role="FACULTY" EntitySet="FACULTY" />
+            <End Role="GROUP" EntitySet="GROUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GROUP_SPECIALITY" Association="Self.FK_GROUP_SPECIALITY">
+            <End Role="SPECIALITY" EntitySet="SPECIALITY" />
+            <End Role="GROUP" EntitySet="GROUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GROUP_USER" Association="Self.FK_GROUP_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="GROUP" EntitySet="GROUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MARK_SUBJECT" Association="Self.FK_MARK_SUBJECT">
+            <End Role="SUBJECT" EntitySet="SUBJECT" />
+            <End Role="MARK" EntitySet="MARK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MARK_USER" Association="Self.FK_MARK_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="MARK" EntitySet="MARK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_ROLE" Association="Self.FK_USER_ROLE">
+            <End Role="ROLE" EntitySet="ROLE" />
+            <End Role="USER" EntitySet="USER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUBJECT_USER" Association="Self.FK_SUBJECT_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="SUBJECT" EntitySet="SUBJECT" />
+          </AssociationSet>
+          <EntitySet Name="SUBJECT_GROUP" EntityType="gr691_mnmModel.SUBJECT_GROUP" />
+        </EntityContainer>
+        <EntityType Name="SUBJECT_GROUP">
+          <Key>
+            <PropertyRef Name="FK_GROUP_ID" />
+            <PropertyRef Name="FK_SUBJECT_ID" />
+          </Key>
+          <Property Name="FK_GROUP_ID" Type="Int32" Nullable="false" />
+          <Property Name="FK_SUBJECT_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище gr691_mnmModelContainer" CdmEntityContainer="gr691_mnmEntities">
+          <EntitySetMapping Name="COURSE">
+            <EntityTypeMapping TypeName="gr691_mnmModel.COURSE">
+              <MappingFragment StoreEntitySet="COURSE">
+                <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FACULTY">
+            <EntityTypeMapping TypeName="gr691_mnmModel.FACULTY">
+              <MappingFragment StoreEntitySet="FACULTY">
+                <ScalarProperty Name="FACULTY_ID" ColumnName="FACULTY_ID" />
+                <ScalarProperty Name="FACULTY1" ColumnName="FACULTY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GROUP">
+            <EntityTypeMapping TypeName="gr691_mnmModel.GROUP">
+              <MappingFragment StoreEntitySet="GROUP">
+                <ScalarProperty Name="GROUP_ID" ColumnName="GROUP_ID" />
+                <ScalarProperty Name="GROUP1" ColumnName="GROUP" />
+                <ScalarProperty Name="FK_COURSE_ID" ColumnName="FK_COURSE_ID" />
+                <ScalarProperty Name="FK_SPECIALITY_ID" ColumnName="FK_SPECIALITY_ID" />
+                <ScalarProperty Name="FK_FACULTY_ID" ColumnName="FK_FACULTY_ID" />
+                <ScalarProperty Name="FK_TEACHER_ID" ColumnName="FK_TEACHER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MARK">
+            <EntityTypeMapping TypeName="gr691_mnmModel.MARK">
+              <MappingFragment StoreEntitySet="MARK">
+                <ScalarProperty Name="MARK_ID" ColumnName="MARK_ID" />
+                <ScalarProperty Name="MARK1" ColumnName="MARK" />
+                <ScalarProperty Name="FK_SUBJECT_ID" ColumnName="FK_SUBJECT_ID" />
+                <ScalarProperty Name="FK_STUDENT_ID" ColumnName="FK_STUDENT_ID" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLE">
+            <EntityTypeMapping TypeName="gr691_mnmModel.ROLE">
+              <MappingFragment StoreEntitySet="ROLE">
+                <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SPECIALITY">
+            <EntityTypeMapping TypeName="gr691_mnmModel.SPECIALITY">
+              <MappingFragment StoreEntitySet="SPECIALITY">
+                <ScalarProperty Name="SPECIALITY_ID" ColumnName="SPECIALITY_ID" />
+                <ScalarProperty Name="SPECIALITY1" ColumnName="SPECIALITY" />
+                <ScalarProperty Name="CODE" ColumnName="CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SUBJECT">
+            <EntityTypeMapping TypeName="gr691_mnmModel.SUBJECT">
+              <MappingFragment StoreEntitySet="SUBJECT">
+                <ScalarProperty Name="SUBJECT_ID" ColumnName="SUBJECT_ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="FK_TEACHER_ID" ColumnName="FK_TEACHER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USER">
+            <EntityTypeMapping TypeName="gr691_mnmModel.USER">
+              <MappingFragment StoreEntitySet="USER">
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="SURNAME" ColumnName="SURNAME" />
+                <ScalarProperty Name="PATRONYMIC" ColumnName="PATRONYMIC" />
+                <ScalarProperty Name="FK_GROUP_ID" ColumnName="FK_GROUP_ID" />
+                <ScalarProperty Name="LOGIN" ColumnName="LOGIN" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="FK_ROLE_ID" ColumnName="FK_ROLE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SUBJECT_GROUP">
+            <EntityTypeMapping TypeName="gr691_mnmModel.SUBJECT_GROUP">
+              <MappingFragment StoreEntitySet="SUBJECT_GROUP">
+                <ScalarProperty Name="FK_SUBJECT_ID" ColumnName="FK_SUBJECT_ID" />
+                <ScalarProperty Name="FK_GROUP_ID" ColumnName="FK_GROUP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

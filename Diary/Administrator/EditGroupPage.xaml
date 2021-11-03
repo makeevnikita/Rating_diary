@@ -1,0 +1,41 @@
+﻿<Page x:Class="Diary.Administrator.EditGroupPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Diary.Administrator"
+      mc:Ignorable="d" 
+      d:DesignHeight="320"
+      Title="EditGroupPage" Width="798">
+
+    <Grid HorizontalAlignment="Left" Width="798">
+        <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Name="lblError" Margin="10,239,520,10"/>
+        
+        <Label Content="Номер группы" HorizontalAlignment="Left" Margin="15,11,0,0" VerticalAlignment="Top"/>
+        <Label Content="Курс" HorizontalAlignment="Left" Margin="60,42,0,0" VerticalAlignment="Top"/>
+        <Label Content="Специальность" HorizontalAlignment="Left" Margin="1,73,0,0" VerticalAlignment="Top"/>
+        <Label Content="Факультет" HorizontalAlignment="Left" Margin="30,104,0,0" VerticalAlignment="Top"/>
+        <Label Content="Куратор" HorizontalAlignment="Left" Margin="40,135,0,0" VerticalAlignment="Top"/>
+
+        <TextBox MaxLength="20" Name="txtNumber" HorizontalAlignment="Left" Height="23" Margin="105,14,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+        <ComboBox SelectionChanged="comboBoxGroup_SelectionChangedCourse" Name="comboBoxCourse" HorizontalAlignment="Left" Margin="105,46,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox SelectionChanged="comboBoxGroup_SelectionChangedSpeciality" Name="comboBoxSpeciality" HorizontalAlignment="Left" Margin="105,77,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox SelectionChanged="comboBoxGroup_SelectionChangedFaculty" Name="comboBoxFaculty" HorizontalAlignment="Left" Margin="105,108,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox SelectionChanged="comboBoxGroup_SelectionChangedTeacher" Name="comboBoxTeacher" HorizontalAlignment="Left" Margin="105,138,0,0" VerticalAlignment="Top" Width="120"/>
+
+        <Label Content="Предметы, которые изучает группа" Margin="296,0,296,293" HorizontalAlignment="Center"/>
+        <Label Content="Доступные предметы" Margin="578,1,90,293" HorizontalAlignment="Center"/>
+
+        <Button Click="Confirm" Content="Подтвердить" Width="128" Height="30" Margin="131,204,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Click="Cancel" Content="Отмена" Width="102" Height="30" Margin="15,204,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ScrollViewer HorizontalAlignment="Left" Height="257" Margin="278,27,0,0" VerticalAlignment="Top" Width="252">
+            <StackPanel Name="stackPanelGroup1"/>
+        </ScrollViewer>
+
+        <ScrollViewer HorizontalAlignment="Left" Height="257" Margin="536,27,0,0" VerticalAlignment="Top" Width="252">
+            <StackPanel Name="stackPanelGroup2"/>
+        </ScrollViewer>
+
+    </Grid>
+</Page>

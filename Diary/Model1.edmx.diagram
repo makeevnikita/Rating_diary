@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d05f2485fa1d441ab27342e252fb2955" Name="Diagram1" ZoomLevel="93">
+        <EntityTypeShape EntityType="gr691_mnmModel.COURSE" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gr691_mnmModel.FACULTY" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="gr691_mnmModel.GROUP" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gr691_mnmModel.MARK" Width="1.5" PointX="9.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="gr691_mnmModel.ROLE" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="gr691_mnmModel.SPECIALITY" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="gr691_mnmModel.SUBJECT" Width="1.5" PointX="7.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="gr691_mnmModel.USER" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="gr691_mnmModel.FK_GROUP_COURSE" ManuallyRouted="false" />
+        <AssociationConnector Association="gr691_mnmModel.FK_GROUP_FACULTY" ManuallyRouted="false" />
+        <AssociationConnector Association="gr691_mnmModel.FK_GROUP_SPECIALITY" ManuallyRouted="false" />
+        <AssociationConnector Association="gr691_mnmModel.FK_GROUP_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="gr691_mnmModel.FK_MARK_SUBJECT" ManuallyRouted="false" />
+        <AssociationConnector Association="gr691_mnmModel.FK_MARK_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="gr691_mnmModel.FK_USER_ROLE" ManuallyRouted="false" />
+        <AssociationConnector Association="gr691_mnmModel.FK_SUBJECT_USER" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="gr691_mnmModel.SUBJECT_GROUP" Width="1.5" PointX="7.25" PointY="6.625" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
